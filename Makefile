@@ -1,6 +1,6 @@
 .DEFAULT_GOAL := default
 
-IMAGE ?= docker.cluster.fun/private/cel-tester:latest
+IMAGE ?= rg.fr-par.scw.cloud/averagemarcus/cel-tester:latest
 
 .PHONY: test # Run all tests, linting and format checks
 test: lint check-format run-tests
@@ -8,42 +8,26 @@ test: lint check-format run-tests
 .PHONY: lint # Perform lint checks against code
 lint:
 	@echo "⚠️ 'lint' unimplemented"
-	# GO Projects
-	# @go vet && golint -set_exit_status ./...
 
 .PHONY: check-format # Checks code formatting and returns a non-zero exit code if formatting errors found
 check-format:
-	@echo "⚠️ 'check-format' unimplemented"
-	# GO Projects
-	# @gofmt -e -l .
+	@gofmt -e -l .
 
 .PHONY: format # Performs automatic format fixes on all code
 format:
-	@echo "⚠️ 'format' unimplemented"
-	# GO Projects
-	# @gofmt -s -w .
+	@gofmt -s -w .
 
 .PHONY: run-tests # Runs all tests
 run-tests:
 	@echo "⚠️ 'run-tests' unimplemented"
-	# GO Projects
-	# @go test
-	# Node Projects
-	# @npm test
 
 .PHONY: fetch-deps # Fetch all project dependencies
 fetch-deps:
-	@echo "⚠️ 'fetch-deps' unimplemented"
-	# GO Projects
-	# @go mod tidy
-	# Node Projects
-	# @npm install
+	@go mod tidy
 
 .PHONY: build # Build the project
 build: lint check-format fetch-deps
-	@echo "⚠️ 'build' unimplemented"
-	# GO Projects
-	# @go build -o PROJECT_NAME main.go
+	@GOOS=js GOARCH=wasm go build -o lib.wasm main.go
 
 .PHONY: docker-build # Build the docker image
 docker-build:
@@ -56,10 +40,6 @@ docker-publish:
 .PHONY: run # Run the application
 run:
 	@echo "⚠️ 'run' unimplemented"
-	# GO Projects
-	# @go run main.go
-	# Node Projects
-	# @npm start
 
 .PHONY: ci # Perform CI specific tasks to perform on a pull request
 ci:
@@ -67,7 +47,7 @@ ci:
 
 .PHONY: release # Release the latest version of the application
 release:
-	@echo "⚠️ 'release' unimplemented"
+	kubectl --namespace cel-tester set image deployment cel-tester web=rg.fr-par.scw.cloud/averagemarcus/cel-tester:$(SHA)
 
 .PHONY: help # Show this list of commands
 help:

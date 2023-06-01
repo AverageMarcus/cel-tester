@@ -4,11 +4,7 @@ Browser-based CEL expression tester.
 
 ## Features
 
-## Install
-
-```sh
-
-```
+Dynamically test CEL expression in the brower.
 
 ## Building from source
 
